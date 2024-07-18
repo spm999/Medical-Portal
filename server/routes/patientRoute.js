@@ -7,6 +7,6 @@ const authMiddleware = require('../middleware/patientMiddleware.js');
 // Route definitions using middleware
 router.post('/signup', patientController.signup);
 router.post('/login', patientController.login);
-router.post('/doctor-details',authMiddleware, patientController.getDoctorDetails);
+router.get('/doctor-details',authMiddleware, patientController.getDoctorDetails);
 
 module.exports = router;
