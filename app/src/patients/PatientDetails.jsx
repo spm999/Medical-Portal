@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import '../css/Patient/PatientDetails.css'
 
 const PatientDetails = () => {
   const [patient, setPatient] = useState(null);
@@ -12,7 +13,7 @@ const PatientDetails = () => {
     const fetchPatientDetails = async () => {
       const token = localStorage.getItem('token');
       if (!token) {
-        navigate('/patient/login');
+        navigate('/');
         return;
       }
 
@@ -32,34 +33,34 @@ const PatientDetails = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    navigate('/patient/login');
+    navigate('/');
   };
 
   if (error) return <p style={{ color: 'red' }}>{error}</p>;
 
   return (
-    <div>
-      <h2>Patient Dashboard</h2>
-      <button onClick={handleLogout}>Logout</button>
+    <div className="dashboard-container">
+      <h2 className="dashboard-title">Patient Dashboard</h2>
+      <button className="logout-button" onClick={handleLogout}>Logout</button>
       {patient ? (
-        <div>
-          <h3>Patient Details</h3>
-          <p>Name: {patient[0].name}</p>
-          <p>Email: {patient[0].email}</p>
+        <div className="patient-details-container">
+          <h3 className="section-title">Patient Details</h3>
+          <p className="patient-detail">Name: {patient[0].name}</p>
+          <p className="patient-detail">Email: {patient[0].email}</p>
 
-          <h3>Linked Doctors</h3>
-          <ul>
+          <h3 className="section-title">Linked Doctor</h3>
+          <ul className="doctor-list">
             {doctors.map((doctor) => (
-              <li key={doctor.email}>
-                <p>Name: {doctor.name}</p>
-                <p>Email: {doctor.email}</p>
-                <p>Specialty: {doctor.specialty}</p>
+              <li key={doctor.email} className="doctor-item">
+                <p className="doctor-detail">Name: {doctor.name}</p>
+                <p className="doctor-detail">Email: {doctor.email}</p>
+                <p className="doctor-detail">Specialty: {doctor.specialty}</p>
               </li>
             ))}
           </ul>
         </div>
       ) : (
-        <p>Loading...</p>
+        <p className="loading-message">Loading...</p>
       )}
     </div>
   );

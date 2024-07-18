@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import '../css/Patient/SignupPatient.css';
 
 const SignupPatient = () => {
   const [formData, setFormData] = useState({
@@ -32,25 +33,26 @@ const SignupPatient = () => {
   };
 
   return (
-    <div>
-      <h2>Signup</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name</label>
-          <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+    <div className="signup-container">
+      <h2 className="signup-title">Patient Signup</h2>
+      <form onSubmit={handleSubmit} className="signup-form">
+        <div className="form-group">
+          <label className="form-label">Name</label>
+          <input type="text" name="name" value={formData.name} onChange={handleChange} required className="form-input" />
         </div>
-        <div>
-          <label>Email</label>
-          <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+        <div className="form-group">
+          <label className="form-label">Email</label>
+          <input type="email" name="email" value={formData.email} onChange={handleChange} required className="form-input" />
         </div>
-        <div>
-          <label>Password</label>
-          <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+        <div className="form-group">
+          <label className="form-label">Password</label>
+          <input type="password" name="password" value={formData.password} onChange={handleChange} required className="form-input" />
         </div>
-        <button type="submit">Signup</button>
+        <button type="submit" className="signup-button">Signup</button>
       </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {message && <p style={{ color: 'green' }}>{message}</p>}
+      {error && <p className="error-message">{error}</p>}
+      {message && <p className="success-message">{message}</p>}
+      <p className="login-link">Already have an account? <Link to="/patient/login">Login</Link></p>
     </div>
   );
 };
