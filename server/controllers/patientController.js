@@ -11,7 +11,7 @@ exports.signup = async (req, res) => {
     try {
         const patient = await sql`SELECT * FROM Patients WHERE email = ${email}`;
         if (patient.length > 0) {
-            return res.status(400).json({ error: 'Patient already exists' });
+            return res.status(400).json({ error: 'Patient already exists with same email.' });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -54,7 +54,10 @@ exports.getDoctorDetails = async (req, res) => {
         JOIN DoctorPatient dp ON d.DoctorID = dp.DoctorID
         WHERE dp.PatientID = ${patientId};
         `;
-        res.status(200).json({ doctors });
+
+        const patient=await sql`
+        select Name, Email from Patients where PatientID=${patientId}`
+        res.status(200).json({ doctors, patient });
     } catch (error) {
         res.status(500).json({ error: 'Error fetching doctor details' });
     }
