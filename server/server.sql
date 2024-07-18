@@ -1,0 +1,30 @@
+CREATE TABLE Doctors (
+DoctorID SERIAL PRIMARY KEY,
+Name VARCHAR(100),
+Email VARCHAR(100) UNIQUE,
+PasswordHash VARCHAR(255),
+Specialty VARCHAR(100)
+);
+
+CREATE TABLE Patients (
+PatientID SERIAL PRIMARY KEY,
+Name VARCHAR(100),
+Email VARCHAR(100) UNIQUE,
+PasswordHash VARCHAR(255)
+);
+
+CREATE TABLE PDFs (
+PDFID SERIAL PRIMARY KEY,
+DoctorID INT,
+FilePath VARCHAR(255),
+UploadDate TIMESTAMP,
+FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID)
+);
+
+CREATE TABLE DoctorPatient (
+DoctorID INT,
+PatientID INT,
+PRIMARY KEY (DoctorID, PatientID),
+FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID),
+FOREIGN KEY (PatientID) REFERENCES Patients(PatientID)
+);
