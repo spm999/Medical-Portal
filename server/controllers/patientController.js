@@ -1,13 +1,19 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const sql = require('../utils/db');
-// const cloudinary = require('../config/cloudinaryConfig'); // Use the configured Cloudinary instance
-// const multer = require('multer');
-// const upload = multer({ dest: 'stepsAI/uploads/' });
+const checkPasswordStrength =require('../middleware/passwordMiddleware'); // Adjust the import path as per your project structure
+
 
 // Signup
 exports.signup = async (req, res) => {
     const { name, email, password } = req.body;
+
+     // Validate password strength
+  const passwordStrength = checkPasswordStrength(password);
+  if (passwordStrength !== 'strong') {
+    return res.status(400).json({ error: passwordStrength });
+  }
+
     try {
         const patient = await sql`SELECT * FROM Patients WHERE email = ${email}`;
         if (patient.length > 0) {

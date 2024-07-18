@@ -4,10 +4,20 @@ const sql = require('../utils/db');
 const cloudinary = require('../config/cloudinaryConfig'); // Use the configured Cloudinary instance
 const multer = require('multer');
 const upload = multer({ dest: 'stepsAI/uploads/' });
+const checkPasswordStrength =require('../middleware/passwordMiddleware'); // Adjust the import path as per your project structure
+
 
 // Signup
 exports.signup = async (req, res) => {
   const { name, email, password, specialty } = req.body;
+
+
+   // Validate password strength
+   const passwordStrength = checkPasswordStrength(password);
+   if (passwordStrength !== 'strong') {
+     return res.status(400).json({ error: passwordStrength });
+   }
+
   try {
     const doctor = await sql`SELECT * FROM Doctors WHERE email = ${email}`;
     if (doctor.length > 0) {
@@ -40,53 +50,6 @@ exports.login = async (req, res) => {
     res.status(500).json({ error: 'Server error' });
   }
 };
-
-// Upload PDF
-// exports.uploadPDF = [
-//   upload.single('pdf'),
-//   async (req, res) => {
-
-//     const file = req.file;
-//     const doctorId = req.doctorId;
-
-//     if (!file) {
-//       return res.status(400).json({ error: 'No file found' });
-//     }
-//     const path = file.path;
-
-//     try {
-//       // Upload PDF to Cloudinary
-//       cloudinary.uploader.upload(path,
-//         {
-//           folder: 'uploads/pdf'
-//         },
-//         async (error, result) => {
-//           if (error) {
-//             console.error('Cloudinary upload error:', error);
-//             return res.status(500).json({ error: 'PDF upload failed' });
-//           }
-//           // console.log(doctorId, result.secure_url, new Date());
-
-//           try {
-//             // Create PDF record in the database
-//             await sql`
-//               INSERT INTO PDFs (DoctorID, FilePath, UploadDate)
-//               VALUES (${doctorId}, ${result.secure_url}, ${new Date()})
-//             `;
-
-//             res.status(201).json({ message: 'PDF uploaded successfully' });
-//           } catch (dbError) {
-//             console.error('Error creating PDF record:', dbError);
-//             res.status(500).json({ error: 'Failed to create PDF record' });
-//           }
-//         }
-//       )
-//     } catch (uploadError) {
-//       console.error('Error uploading PDF:', uploadError);
-//       res.status(500).json({ error: 'PDF upload failed' });
-//     }
-//   }
-// ];
 
 
 exports.uploadPDF = [
