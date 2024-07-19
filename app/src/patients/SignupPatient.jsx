@@ -22,7 +22,7 @@ const SignupPatient = () => {
     setError('');
     setMessage('');
     try {
-      const response = await axios.post('http://localhost:3000/patient/signup', formData);
+      const response = await axios.post('https://medical-portal-l7pr.onrender.com/patient/signup', formData);
       setMessage(response.data.message);
       setTimeout(() => {
         navigate('/patient/login'); // Redirect to the login page
