@@ -18,7 +18,7 @@ const PatientDetails = () => {
       }
 
       try {
-        const response = await axios.get('http://localhost:3000/patient/doctor-details', {
+        const response = await axios.get('https://medical-portal-l7pr.onrender.com/patient/doctor-details', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setPatient(response.data.patient);
