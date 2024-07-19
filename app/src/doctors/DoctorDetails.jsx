@@ -30,7 +30,7 @@ const DoctorDetails = () => {
         return;
       }
       try {
-        const response = await axios.get('http://localhost:3000/doctor/details', {
+        const response = await axios.get('https://medical-portal-l7pr.onrender.com/doctor/details', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setDoctor(response.data.doctor);
@@ -43,7 +43,7 @@ const DoctorDetails = () => {
       
       try {
         const token = localStorage.getItem('Dtoken');
-        const response = await axios.get('http://localhost:3000/doctor/available-patients', {
+        const response = await axios.get('https://medical-portal-l7pr.onrender.com/doctor/available-patients', {
           headers: { Authorization: `Bearer ${token}` }
         });
         const patientsArray = Object.keys(response.data.patients).map(key => ({
@@ -59,7 +59,7 @@ const DoctorDetails = () => {
     const fetchMyPatients = async () => {
       try {
         const token = localStorage.getItem('Dtoken');
-        const response = await axios.get('http://localhost:3000/doctor/my-patients', {
+        const response = await axios.get('https://medical-portal-l7pr.onrender.com/doctor/my-patients', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setMyPatients(response.data.patients);
@@ -71,7 +71,7 @@ const DoctorDetails = () => {
     const fetchPdfs = async () => {
       try {
         const token = localStorage.getItem('Dtoken');
-        const response = await axios.get('http://localhost:3000/doctor/pdfs', {
+        const response = await axios.get('https://medical-portal-l7pr.onrender.com/doctor/pdfs', {
           headers: { Authorization: `Bearer ${token}` }
         });
         setPdfs(response.data.pdfs);
@@ -101,7 +101,7 @@ const DoctorDetails = () => {
       formData.append('pdf', pdfFile);
 
       const token = localStorage.getItem('Dtoken');
-      const response = await axios.post('http://localhost:3000/doctor/upload-pdf', formData, {
+      const response = await axios.post('https://medical-portal-l7pr.onrender.com/doctor/upload-pdf', formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
@@ -131,7 +131,7 @@ const DoctorDetails = () => {
     try {
       const token = localStorage.getItem('Dtoken');
       await axios.post(
-        'http://localhost:3000/doctor/delete-pdf',
+        'https://medical-portal-l7pr.onrender.com/delete-pdf',
         { pdfId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -146,7 +146,7 @@ const DoctorDetails = () => {
     try {
       const token = localStorage.getItem('Dtoken');
       await axios.post(
-        'http://localhost:3000/doctor/link-patient',
+        'https://medical-portal-l7pr.onrender.com/link-patient',
         { patientId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -163,7 +163,7 @@ const DoctorDetails = () => {
     try {
       const token = localStorage.getItem('Dtoken');
       await axios.post(
-        'http://localhost:3000/doctor/unlink-patient',
+        'https://medical-portal-l7pr.onrender.com/doctor/unlink-patient',
         { patientId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
