@@ -21,7 +21,7 @@ const Login = () => {
     setError('');
     setMessage('');
     try {
-      const response = await axios.post('http://localhost:3000/doctor/login', formData);
+      const response = await axios.post('https://medical-portal-l7pr.onrender.com/doctor/login', formData);
       setMessage('Login successful');
     //   console.log(response.data.token)
       localStorage.setItem('Dtoken', response.data.token); // Save token to localStorage
